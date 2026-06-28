@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Happy Birthday, Mama 🎉</title>
+<meta name="description" content="A birthday gift website made with love." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============================================================
+     LOADING SCREEN
+     ============================================================ -->
+<div id="loader" class="loader">
+  <div class="loader-inner">
+    <div class="loader-cake" aria-hidden="true">🎂</div>
+    <p class="loader-text">Wrapping your gift<span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
+    <div class="loader-bar-track"><div class="loader-bar-fill" id="loaderFill"></div></div>
+    <p class="loader-pct" id="loaderPct">0%</p>
+  </div>
+</div>
+
+<!-- Cursor sparkle trail (desktop only) -->
+<div id="cursorGlow" class="cursor-glow" aria-hidden="true"></div>
+
+<!-- Scroll progress bar -->
+<div class="scroll-progress" aria-hidden="true"><div id="scrollProgressFill" class="scroll-progress-fill"></div></div>
+
+<!-- Ambient background: fireflies / floating particles -->
+<canvas id="bgCanvas" class="bg-canvas" aria-hidden="true"></canvas>
+
+<!-- Background music -->
+<audio id="bgMusic" loop preload="none">
+  <source src="assets/music/birthday-theme.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ============================================================
+     INTRO / LANDING GATE
+     ============================================================ -->
+<section id="introGate" class="intro-gate">
+  <div class="intro-bg" aria-hidden="true">
+    <div class="intro-particles" id="introParticles"></div>
+  </div>
+  <div class="intro-content">
+    <p class="intro-eyebrow">A small surprise from Aditi</p>
+    <h1 class="intro-title">Happy Birthday, <span class="blue-text">Mama</span> 🎉</h1>
+    <p class="intro-sub">Gareebo ka birthday gift...</p>
+    <button id="openSurpriseBtn" class="btn-glow">
+      <span>Open Your Surprise</span>
+      <span class="btn-shine" aria-hidden="true"></span>
+    </button>
+  </div>
+</section>
+
+<!-- Fireworks overlay canvas -->
+<canvas id="fireworksCanvas" class="fireworks-canvas" aria-hidden="true"></canvas>
+
+<!-- ============================================================
+     MAIN EXPERIENCE
+     ============================================================ -->
+<div id="mainExperience" class="main-experience">
+
+  <!-- NAVIGATION -->
+  <nav id="mainNav" class="main-nav" aria-label="Section navigation">
+    <div class="nav-inner">
+      <a href="#home" class="nav-brand">🎂 <span>Mama's Day</span></a>
+      <div class="nav-links" id="navLinks">
+        <a href="#home" class="nav-link active"><span class="nav-emoji">🏠</span><span class="nav-label">Home</span></a>
+        <a href="#messages" class="nav-link"><span class="nav-emoji">💌</span><span class="nav-label">Messages</span></a>
+        <a href="#surprise" class="nav-link"><span class="nav-emoji">🎁</span><span class="nav-label">Surprise</span></a>
+        <a href="#reasons" class="nav-link"><span class="nav-emoji">💭</span><span class="nav-label">Reasons</span></a>
+        <a href="#journey" class="nav-link"><span class="nav-emoji">🕰</span><span class="nav-label">Journey</span></a>
+        <a href="#letter" class="nav-link"><span class="nav-emoji">❤️</span><span class="nav-label">Letter</span></a>
+      </div>
+      <button id="musicToggleNav" class="music-toggle-nav" aria-label="Toggle background music" aria-pressed="false">🔈</button>
+    </div>
+  </nav>
+
+  <!-- ================= HOME ================= -->
+  <section id="home" class="section hero-section">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="floating-balloons" id="heroBalloons"></div>
+      <div class="hero-stars" id="heroStars"></div>
+    </div>
+    <div class="hero-content">
+      <p class="eyebrow">For the one and only</p>
+      <h1 class="hero-title">Happy Birthday,<br><span class="blue-text">Mama</span></h1>
+      <p class="hero-sub">Thank you for being the coolest, most supportive, and most annoying person I know.</p>
+      <a href="#messages" class="btn-primary">Start Exploring <span class="arrow">↓</span></a>
+    </div>
+    <div class="scroll-hint" aria-hidden="true"><span></span></div>
+  </section>
+
+  <!-- ================= MESSAGES ================= -->
+  <section id="messages" class="section messages-section">
+    <div class="section-head">
+      <p class="eyebrow">💌 Messages</p>
+      <h2 class="section-title">A few things I never say out loud</h2>
+      <p class="section-sub">Tap each envelope to open it.</p>
+    </div>
+    <div class="envelopes-grid" id="envelopesGrid"></div>
+  </section>
+
+  <!-- ================= BIRTHDAY SURPRISE ================= -->
+  <section id="surprise" class="section surprise-section">
+    <div class="section-head">
+      <p class="eyebrow">🎁 Birthday Surprise</p>
+      <h2 class="section-title">One more thing...</h2>
+    </div>
+    <div class="gift-stage">
+      <div class="gift-balloons-rise" id="giftBalloons" aria-hidden="true"></div>
+      <div class="gift-box-wrap" id="giftBoxWrap">
+        <div class="gift-box" id="giftBox">
+          <div class="gift-lid" id="giftLid">
+            <div class="gift-bow" aria-hidden="true"><span class="bow-loop bow-left"></span><span class="bow-loop bow-right"></span><span class="bow-knot"></span></div>
+          </div>
+          <div class="gift-ribbon-v" aria-hidden="true"></div>
+          <div class="gift-ribbon-h" aria-hidden="true"></div>
+          <div class="gift-base">
+            <div class="gift-reveal" id="giftReveal">
+              <p>The real gift isn't this website…</p>
+              <p class="gift-reveal-highlight">It's having someone like you in our life.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button id="openGiftBtn" class="btn-primary gift-btn">Open Gift 🎁</button>
+    </div>
+  </section>
+
+  <!-- ================= REASONS YOU'RE AMAZING ================= -->
+  <section id="reasons" class="section reasons-section">
+    <div class="section-head">
+      <p class="eyebrow">💭 Reasons You're Amazing</p>
+      <h2 class="section-title">Just a few. There are more.</h2>
+    </div>
+    <div class="reasons-grid" id="reasonsGrid"></div>
+  </section>
+
+  <!-- ================= JOURNEY THROUGH LIFE ================= -->
+  <section id="journey" class="section journey-section">
+    <div class="section-head">
+      <p class="eyebrow">🕰 Journey Through Life</p>
+      <h2 class="section-title">Every picture tells a story</h2>
+      <p class="section-sub">Click any moment to read the longer story behind it.</p>
+    </div>
+    <div class="journey-wrap">
+      <div class="journey-line" aria-hidden="true"><div class="journey-line-fill" id="journeyLineFill"></div></div>
+      <div class="journey-track" id="journeyTrack"></div>
+    </div>
+    <div class="journey-finale" id="journeyFinale">
+      <p class="journey-finale-eyebrow">Every picture tells a story...</p>
+      <h3 class="journey-finale-title">...and every story led us here.</h3>
+      <p class="journey-finale-sub">Happy Birthday, Mama ❤️</p>
+    </div>
+  </section>
+
+  <!-- ================= FINAL LETTER ================= -->
+  <section id="letter" class="section letter-section">
+    <div class="section-head">
+      <p class="eyebrow">❤️ Final Letter</p>
+    </div>
+    <div class="letter-paper">
+      <div class="letter-tape" aria-hidden="true"></div>
+      <p class="letter-body" id="letterBody"></p>
+      <p class="letter-closing">Happy Birthday, Mama ❤️<br>Hope today is as amazing as you.</p>
+      <p class="letter-sign">— Aditi</p>
+    </div>
+  </section>
+
+  <!-- ================= POST-CREDITS: ONE LAST THING ================= -->
+  <section id="postcredits" class="section postcredits-section" hidden>
+    <div class="postcredits-inner" id="postcreditsInner">
+      <p class="eyebrow">👀 One Last Thing...</p>
+      <h2 class="postcredits-title">You didn't think I'd make this for free, did you? 😂</h2>
+
+      <div class="qr-card">
+        <div class="qr-frame">
+          <img src="assets/images/payment-qr.png" alt="Payment QR code" class="qr-image" id="qrImage" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="qr-fallback" id="qrFallback">
+            <span>📷</span>
+            <p>Drop your QR at<br><code>assets/images/payment-qr.png</code></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bill-card">
+        <h3 class="bill-title">Birthday Website Development Charges</h3>
+        <table class="bill-table">
+          <tbody>
+            <tr><td>Designing the website</td><td class="bill-amount">₹9,999</td></tr>
+            <tr><td>Collecting memories</td><td class="bill-amount">₹4,999</td></tr>
+            <tr><td>Adding unlimited love</td><td class="bill-amount">Priceless ❤️</td></tr>
+            <tr><td>Family Discount</td><td class="bill-amount bill-discount">−99.99%</td></tr>
+            <tr class="bill-total-row"><td><strong>Amount Payable</strong></td><td class="bill-amount bill-total">One Treat 🍕🍰</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <button id="payBtn" class="btn-glow pay-btn">
+        <span>Scan to Pay 😂</span>
+        <span class="btn-shine" aria-hidden="true"></span>
+      </button>
+
+      <div class="coins-rise" id="coinsRise" aria-hidden="true"></div>
+
+      <div class="payment-status" id="paymentStatus" aria-live="polite"></div>
+
+      <div class="payment-chips" id="paymentChips" hidden>
+        <p class="chips-label">Accepted Payment Methods:</p>
+        <div class="chips-row" id="chipsRow"></div>
+      </div>
+
+      <p class="payment-final" id="paymentFinal" hidden>Seeing you smile today is the only payment I actually wanted.</p>
+    </div>
+
+    <div class="postcredits-end" id="postcreditsEnd" hidden>
+      <h2 class="end-title">Happy Birthday, Mama ❤️</h2>
+      <p class="end-credit">Made by PILLu</p>
+    </div>
+  </section>
+
+</div>
+
+<!-- Easter egg toast -->
+<div id="easterToast" class="easter-toast" role="status" aria-live="polite">You found the secret! 😂</div>
+
+<!-- Floating cake icon (easter egg trigger) -->
+<button id="floatingCake" class="floating-cake" aria-label="Secret birthday cake">🎂</button>
+
+<!-- Memory / Journey fullscreen lightbox (shared) -->
+<div id="memoryLightbox" class="memory-lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="memory-lightbox-backdrop" id="memoryLightboxBackdrop"></div>
+  <div class="memory-lightbox-card" id="memoryLightboxCard">
+    <button class="lightbox-close" id="memoryLightboxClose" aria-label="Close">✕</button>
+    <div class="lightbox-photo" id="lightboxPhoto"></div>
+    <p class="lightbox-date" id="lightboxDate"></p>
+    <h3 class="lightbox-title" id="lightboxTitle"></h3>
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+    <p class="lightbox-desc" id="lightboxDesc"></p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
