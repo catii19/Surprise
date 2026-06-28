@@ -1,24 +1,12 @@
-# Images
+# Background Music
 
-## Payment QR code (for the "One Last Thing" post-credits joke section)
-Drop your real UPI/payment QR code image here as:
+Drop your birthday background track here as:
 
-    payment-qr.png
+    birthday-theme.mp3
 
-The site already looks for this exact filename. Until you add it, a
-friendly placeholder ("Drop your QR here") shows in its place — nothing
-breaks.
+The site already looks for this exact filename (see the <audio> tag in
+index.html). Any soft, warm instrumental track works well — keep it under
+a few MB so it loads quickly.
 
-## Memory & Journey photos
-The Memories gallery and Journey Through Life timeline currently use big
-emoji as photo placeholders (🚲 🎓 💍 etc.) so you can launch the site
-right away and swap in real photos whenever you're ready.
-
-To swap a placeholder for a real photo:
-1. Add your photo file here, e.g. `memory-bike.jpg`
-2. Open `script.js`, find the `MEMORIES_DATA` or `JOURNEY_DATA` array
-3. Change that item's `icon: "🚲"` line to an image tag instead, e.g.:
-   `icon: '<img src="assets/images/memory-bike.jpg" alt="">'`
-
-The layout (circular frames, card sizing, hover effects) already
-supports real photos — no CSS changes needed.
+If no file is present, the music button simply does nothing when clicked
+(no errors) — the rest of the site works perfectly fine without music.
